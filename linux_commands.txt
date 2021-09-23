@@ -1,0 +1,11 @@
+pwd-path of the directory which the the user working
+mkdir -for creating directory
+ls -listing
+cd -change directory
+cd .. -parent directory
+echo-display line of text in terminal
+clear-clear the screen
+nano  - text editor
+cat-concatenate file and print out the standard output
+wc <name>- file detail
+man - system reference manual
