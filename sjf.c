@@ -1,53 +1,64 @@
 #include<stdio.h>
-int main(){
-int bt[10],p[20],wt[20],tat[20],i,j,n,total=0,pos,temp;
-float avgwt,avgtat;
-printf("enter the number of process \n");
-scanf("%d",&n);
-printf("enter burst time");
-for(i=0;i<n;i++)
+void main()
 {
-      printf("p%d:",i+1);
-      scanf("%d",&bt[i]);
-      p[i]=i+1; 
-      
-}
-for(i=0;i<n;i++)
-{
-    pos=i;
-    for(j=i+1;j<n;j++)
-    {
-        if(bt[j]<bt[pos])
-        pos=j;
-    }
-    temp=bt[i];
-    bt[i]=bt[pos];
-    bt[pos]=temp;
-    temp=p[i];
-    p[i]=p[pos];
-    p[pos]=temp;
-
-}
-wt[0]=0;
-for(i=1;i<n;i++)
-{
-wt[i]=0;
-for(j=0;j<i;j++)
-{
-    wt[i]+=bt[j];
-}
-total+=wt[i];
-
-}
-avgwt=(float)total/n;
-total=0;
-printf("nProcesst    Burst Time    tWaiting TimetTurnaround Time\n");
+    int i,j,n,p[10],bt[10],wt[10],tat[10],twt=0,ttat=0,t,flag;
+    float awt,atat;
+    //inserting Number of processes
+    printf("Enter the number of processes :");
+    scanf("%d",&n);
+    //inserting PID and Its Brust Time;;
+    printf("Enter the PID and BT of each processes :");
     for(i=0;i<n;i++)
     {
-        tat[i]=bt[i]+wt[i];   
-        total+=tat[i];
-        printf("%d\t  %d\t    %d\t%d",p[i],bt[i],wt[i],tat[i]);
+        scanf("%d%d",&p[i],&bt[i]);
     }
-    return 0;
+    //sorting the PID and BT in asending order
+    for(i=0;i<n;i++)
+    {
+        flag=0;
+        for(j=0;j<n-1-i;j++)
+        {
+            if(bt[j]>bt[j+1])
+            {
+                t=bt[j];
+                bt[j]=bt[j+1];
+                bt[j+1]=t;
 
+                t=p[j];
+                p[j]=p[j+1];
+                p[j+1]=t;
+
+                flag=1;
+
+            }
+        }
+        if(flag==0)
+            break;
+    }
+    //calculating the WT and TAT
+    wt[0]=0;
+    tat[0] = bt[0]+wt[0];
+    //printf("%d",&tat[0]);
+    for(i=1;i<n;i++)
+    {
+        wt[i]=wt[i-1]+bt[i-1];
+        //twt = twt+wt[i];
+        tat[i]=bt[i]+wt[i];
+
+    }
+    for(i=0;i<n;i++)
+    {
+        twt=twt+wt[i];
+        ttat=twt+tat[i];
+    }
+    awt=(float)twt/(float)n;
+    //awt=(float)awt;
+    atat=(float)ttat/(float)n;
+    //printing result
+    printf("PID\tBT\tWT\tTAT\n");
+    for(i=0;i<n;i++)
+    {
+        printf("%d\t%d\t%d\t%d\n",p[i],bt[i],wt[i],tat[i]);
+    }
+    printf("Average WT = %f\nAverage TAT = %f",awt,atat);
 }

@@ -4,11 +4,11 @@
 #include<stdlib.h>
 #include<pthread.h>
 #define size 5
-int buffer[size];
-sem_t empty_sem;
-sem_t full_sem;
-pthread_mutex_t mutex;
-int i=0,j=0;
+int buffer[size];//declare buffer
+sem_t empty_sem;//decllare empty semaphore
+sem_t full_sem;//declare full semaphore
+pthread_mutex_t mutex;//declare binary semaphore 
+int i=0,j=0;//iteration
 void* produce(){
     int item;
     srand(time(0));
@@ -45,9 +45,9 @@ void* consume()
     }
 }
 void main(){
-    sem_init(&empty_sem,0,0);
-    sem_init(&full_sem,0,size);
-    pthread_mutex_init(&mutex,NULL);
+    sem_init(&empty_sem,0,0);//initialize empty semaphore 
+    sem_init(&full_sem,0,size);//initlize full semaphore
+    pthread_mutex_init(&mutex,NULL);//initilaize pthread
     pthread_t producer,consumer; 
     pthread_create(&producer,NULL,produce,NULL);
     pthread_create(&consumer,NULL,consume,NULL);
