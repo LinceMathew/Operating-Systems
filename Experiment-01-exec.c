@@ -2,5 +2,8 @@
 #include<unistd.h>
 void main()
 {
-    execl("/usr/bin/ls","ls","-l",NULL); //print files in the current directory
+    printf("pid of exe :%d",getpid());
+    char *args[]={NULL};
+    execv("./EXEC2",args);
+    
 }
